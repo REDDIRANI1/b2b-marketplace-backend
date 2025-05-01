@@ -1,15 +1,14 @@
+import os
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from fastapi import HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
 
-# Dummy user
 fake_user = {
     "username": "admin",
     "password": "admin123"
 }
 
-SECRET_KEY = "your-secret-key"
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback_dev_secret")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
