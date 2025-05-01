@@ -10,7 +10,10 @@ models.Base.metadata.create_all(bind=database.engine)
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Your frontend origin
+    allow_origins=[
+    "http://localhost:5173",  # for local development
+    "https://b2b-marketplace-frontend-7j3u.vercel.app",  # ✅ for deployed frontend
+],  # Your frontend origin
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
