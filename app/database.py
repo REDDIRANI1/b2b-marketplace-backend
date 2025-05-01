@@ -1,14 +1,18 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# Correct DB connection string
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Incorrect%40123@localhost:5432/b2b_marketplace"
+# ✅ Load from environment variable (set in Render)
+SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
+
+if not SQLALCHEMY_DATABASE_URL:
+    raise RuntimeError("DATABASE URL is not set in environment variables")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# ✅ Add this to make DB session injectable in routes
+# ✅ Reusable DB session dependency
 def get_db():
     db = SessionLocal()
     try:
